@@ -44,7 +44,6 @@ const App = () => {
       const newSocket = io("http://localhost:8000", {
         query: { userId: authUser._id },
       });
-      console.log(newSocket, "socket");
 
       dispatch(setSocket(newSocket));
 
@@ -53,7 +52,6 @@ const App = () => {
       });
       return () => {
         if (newSocket) {
-          console.log("Closing socket:", newSocket);
           newSocket.disconnect(); // Use disconnect for Socket.IO cleanup
         }
         dispatch(setSocket(null));

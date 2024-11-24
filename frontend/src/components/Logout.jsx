@@ -13,7 +13,6 @@ function Logout() {
   const logoutMutation = useMutation({
     mutationFn: () => userLogout(),
     onSuccess: (res) => {
-      console.log(res.data);
       toast.success("Logout Success");
       dispatch(setAuthUser(null));
       dispatch(setOtherUser(null));
@@ -21,7 +20,6 @@ function Logout() {
       navigate("/auth/login");
     },
     onError: (error) => {
-      console.log(error.message);
       toast.error("Logout Failed");
     },
   });
@@ -39,14 +37,5 @@ function Logout() {
     </button>
   );
 }
-
-// {loginMutation.data && (
-//     <button
-//       onClick={handleLogout}
-//       className="my-2 rounded-lg border border-red-500 bg-orange-600 px-4 py-1 text-sm text-white"
-//     >
-//       Logout
-//     </button>
-//   )}
 
 export default Logout;

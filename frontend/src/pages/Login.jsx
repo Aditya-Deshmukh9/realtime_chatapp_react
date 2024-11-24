@@ -21,8 +21,6 @@ function Login() {
     mutationFn: () => loginUser({ username, password }),
     onSuccess: (res) => {
       if (!res?.data?.status) {
-        console.log(res.data);
-
         dispatch(setAuthUser(res.data));
         navigate("/");
       }

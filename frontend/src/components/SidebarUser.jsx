@@ -6,7 +6,6 @@ function SidebarUser({ _id, profilePhoto, fullName, username }) {
   const dispatch = useDispatch();
 
   function handleUserClick() {
-    console.log(username);
     const data = { _id, profilePhoto, fullName, username };
     dispatch(setSelectedUser(data));
   }

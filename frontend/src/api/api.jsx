@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: import.meta.env.VITE_BASE_URL,
 });
 
 // http://localhost:8000/api/auth/user/login
@@ -21,8 +21,6 @@ export const registerUser = async ({
   gender,
   conformPassword,
 }) => {
-  console.log(fullName, username, password, gender, conformPassword);
-
   return api.post(
     "/api/auth/user/register",
     {
@@ -54,7 +52,6 @@ export const userLogout = async () => {
 };
 
 export const sendMessage = async ({ receverId, message }) => {
-  console.log("Sending message to:", receverId, "Message:", message);
   const res = await api.post(
     `/api/auth/message/send/${receverId}`,
     { message },

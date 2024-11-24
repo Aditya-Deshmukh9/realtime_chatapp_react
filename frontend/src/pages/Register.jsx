@@ -42,7 +42,6 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
 
     if (
       formData.fullName === "" ||

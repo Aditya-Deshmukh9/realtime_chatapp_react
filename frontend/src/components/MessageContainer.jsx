@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
-import { getPreviousMessage, sendMessage } from "../api/api.jsx";
+import { getPreviousMessage } from "../api/api.jsx";
 import TextMsg from "./textMassage/TextMsg.jsx";
 import MessageSend from "./messageSend.jsx";
 

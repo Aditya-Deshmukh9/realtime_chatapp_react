@@ -20,7 +20,6 @@ function Sidebar() {
   const handleSearch = (e) => {
     e.preventDefault();
     setMessage(e.target.value);
-    console.log(message);
   };
 
   return (
