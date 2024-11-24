@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { getPreviousMessage } from "../api/api.jsx";
 import TextMsg from "./textMassage/TextMsg.jsx";
-import MessageSend from "./messageSend.jsx";
+import MessageSend from "./MessageSend.jsx";
 
 function MessageContainer() {
   const { selectedUser, onlineUsers } = useSelector((state) => state.user);
