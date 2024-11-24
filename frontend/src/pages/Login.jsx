@@ -37,8 +37,6 @@ function Login() {
     loginMutation.mutate({ username, password });
   };
 
-  console.log(loginMutation.data);
-
   return (
     <div className="home-color flex min-h-screen w-full items-center justify-center">
       <div className="flex items-center justify-center rounded-md border border-gray-100 bg-gray-500 bg-opacity-10 bg-clip-padding backdrop-blur-sm backdrop-filter">

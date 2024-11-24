@@ -19,15 +19,22 @@ export const registerUser = async ({
   username,
   password,
   gender,
-  confirmPassword,
+  conformPassword,
 }) => {
-  return api.post("/api/auth/user/register", {
-    fullName,
-    username,
-    password,
-    gender,
-    confirmPassword,
-  });
+  console.log(fullName, username, password, gender, conformPassword);
+
+  return api.post(
+    "/api/auth/user/register",
+    {
+      fullName,
+      username,
+      password,
+      gender,
+      conformPassword,
+    },
+    { username, password },
+    { headers: { "Content-Type": "application/json" }, withCredentials: true },
+  );
 };
 
 // http://localhost:8000/api/auth/user

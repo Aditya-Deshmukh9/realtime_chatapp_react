@@ -1,5 +1,6 @@
 import { Conversation } from "../models/conversationalModal.js";
 import { Message } from "../models/messageModal.js";
+import { getReceverSocketId, io } from "../lib/socket.js";
 
 export const sendMessage = async (req, res) => {
   try {
@@ -23,10 +24,13 @@ export const sendMessage = async (req, res) => {
       gotConversation.messages.push(newMessage._id);
     }
 
-    await gotConversation.save();
+    await Promise.all([gotConversation.save(), newMessage.save()]);
 
-    // SOCKET IO
-
+    // Emit the message to the receiver
+    const receiverSocketId = getReceverSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("message", newMessage);
+    }
     return res
       .status(200)
       .json({ msg: "Message saved successfully", success: true });

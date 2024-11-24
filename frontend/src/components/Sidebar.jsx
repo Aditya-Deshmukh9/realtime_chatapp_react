@@ -10,17 +10,12 @@ function Sidebar() {
   const { data } = useQuery({
     queryKey: ["otherUser]"],
     queryFn: () => getOtherUsers(),
-    onSuccess: (res) => {
-      console.log(res?.data?.otherUsers);
-    },
   });
 
   // Filter users based on the search query
   const filteredUsers = data?.data?.otherUsers.filter((user) =>
     user.fullName.toLowerCase().includes(message.toLowerCase()),
   );
-
-  console.log(filteredUsers);
 
   const handleSearch = (e) => {
     e.preventDefault();

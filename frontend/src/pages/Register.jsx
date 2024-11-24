@@ -6,6 +6,7 @@ import { FaEyeSlash } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { registerUser } from "../api/api";
 
 function Register() {
@@ -15,18 +16,19 @@ function Register() {
     username: "",
     gender: "",
     password: "",
-    confirmPassword: "",
+    conformPassword: "",
   });
   const navigate = useNavigate();
 
   const registerMutation = useMutation({
+    mutationKey: ["register"],
     mutationFn: () => registerUser(formData),
     onSuccess: (res) => {
-      console.log(res);
+      toast.success(res?.data?.msg);
       navigate("/auth/login");
     },
     onError: (error) => {
-      console.log(error.response.data);
+      console.log(error);
     },
   });
 
@@ -41,13 +43,28 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+
+    if (
+      formData.fullName === "" ||
+      formData.username === "" ||
+      formData.gender === "" ||
+      formData.password === "" ||
+      formData.confirmPassword === ""
+    ) {
+      toast("All fields are required!");
+    }
+
+    if (formData.password !== formData.conformPassword) {
+      toast("Passwords do not match!");
+    }
+    registerMutation.mutate(formData);
   };
 
   return (
     <div className="home-color flex min-h-screen w-full items-center justify-center">
       <div className="flex items-center justify-center rounded-md border border-gray-100 bg-gray-500 bg-opacity-10 bg-clip-padding backdrop-blur-sm backdrop-filter">
         <div className="w-full max-w-sm rounded-lg p-8 px-14 shadow-lg sm:max-w-lg">
-          <h2 className="mb-6 text-center text-3xl font-bold">Your logo</h2>
+          <h2 className="mb-6 text-center text-3xl font-bold">Chat App</h2>
 
           <h3 className="mb-4 text-start text-2xl font-semibold">
             Register for free
@@ -129,14 +146,14 @@ function Register() {
             </div>
 
             <div className="relative">
-              <label className="block text-gray-50" htmlFor="confirmPassword">
+              <label className="block text-gray-50" htmlFor="conformPassword">
                 Confirm Password
               </label>
               <input
                 type={showPassword ? "text" : "password"}
-                id="confirmPassword"
+                id="conformPassword"
                 placeholder="Confirm Password"
-                value={formData.confirmPassword}
+                value={formData.conformPassword}
                 onChange={handleChange}
                 className="w-full rounded-lg border px-4 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -153,7 +170,7 @@ function Register() {
             </div>
             {registerMutation.isError ? (
               <p className="text-red-500">
-                {registerMutation?.error?.response?.data?.msg}
+                {/* {registerMutation?.error?.response?.data?.msg} */}
               </p>
             ) : null}
             <button

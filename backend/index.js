@@ -5,10 +5,10 @@ import userRoute from "./routes/userRoute.js";
 import messageRoute from "./routes/messageRoute.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { app, server } from "./lib/socket.js";
 
 dotenv.config({});
 
-const app = express();
 //middleware
 app.use(express.json());
 app.use(cookieParser());
@@ -24,7 +24,7 @@ app.use("/api/auth/message", messageRoute);
 
 const port = 8000;
 
-app.listen(port, () => {
+server.listen(port, () => {
   connectDB();
   console.log(`app is listening port ${port}`);
 });

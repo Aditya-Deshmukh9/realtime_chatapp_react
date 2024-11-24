@@ -1,14 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./userSlice.js";
-import {
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from "redux-persist";
+import userSlice from "./userSlice.js";
+import socketSlice from "./socketSlice.js";
+import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import persistStore from "redux-persist/es/persistStore";
 
@@ -17,17 +10,16 @@ const authPersistConfig = {
   storage,
 };
 
-const persistedAuthReducer = persistReducer(authPersistConfig, userReducer);
+const persistedAuthReducer = persistReducer(authPersistConfig, userSlice);
 
 export const store = configureStore({
   reducer: {
+    socket: socketSlice,
     user: persistedAuthReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActionPaths: [FLUSH, REHYDRATE, PERSIST, PAUSE, PURGE, REGISTER],
-      },
+      serializableCheck: false,
     }),
 });
 

@@ -21,7 +21,6 @@ function SidebarUser({ _id, profilePhoto, fullName, username }) {
         src={profilePhoto}
         alt={`${fullName}_profile_pic`}
         className="h-10 w-10"
-        loading="lazy"
       />
       <h3 className="text-white">{fullName}</h3>
     </div>
