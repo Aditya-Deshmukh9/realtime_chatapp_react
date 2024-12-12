@@ -11,6 +11,7 @@ function MessageContainer() {
   const [messages, setMessages] = useState([]);
 
   const onlineUser = onlineUsers?.includes(selectedUser?._id);
+
   // Fetch previous messages
   const previousMessage = useMutation({
     mutationFn: (userId) => getPreviousMessage(userId),

@@ -7,6 +7,7 @@ import { IoSearchCircleSharp } from "react-icons/io5";
 
 function Sidebar() {
   const [message, setMessage] = useState("");
+
   const { data } = useQuery({
     queryKey: ["otherUser]"],
     queryFn: () => getOtherUsers(),
