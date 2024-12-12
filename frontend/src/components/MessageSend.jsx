@@ -7,7 +7,7 @@ import { IoSend } from "react-icons/io5";
 function MessageSend({ setMessages }) {
   const [message, setMessage] = useState("");
   const { selectedUser, authUser } = useSelector((state) => state.user);
-
+  const { socket } = useSelector((state) => state.socket);
   // Send new message
   const messageSend = useMutation({
     mutationFn: ({ receverId, message }) => sendMessage({ receverId, message }),

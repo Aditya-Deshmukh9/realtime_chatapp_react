@@ -22,7 +22,7 @@ app.use(
 app.use("/api/auth/user", userRoute);
 app.use("/api/auth/message", messageRoute);
 
-const port = 8000;
+const port = process.env.PORT;
 
 server.listen(port, () => {
   connectDB();

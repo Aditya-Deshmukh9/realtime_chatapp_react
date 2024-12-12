@@ -6,12 +6,13 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: [process.env.CORS_ORIGIN],
+    origin: ["http://localhost:5173"],
     methods: ["GET", "POST"],
   },
 });
 
 const userSocketMap = {};
+console.log(userSocketMap);
 
 // Retrieve receiver socket ID
 export const getReceverSocketId = (receiverId) => userSocketMap[receiverId];
@@ -27,7 +28,7 @@ io.on("connection", (socket) => {
 
   // Emit the list of online users
   io.emit("getOnlineUsers", Object.keys(userSocketMap));
-
+  console.log("userSocketMap", userSocketMap);
   // Handle disconnection
   socket.on("disconnect", () => {
     console.log("User disconnected:", socket.id);

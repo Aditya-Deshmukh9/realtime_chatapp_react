@@ -17,6 +17,7 @@ function Logout() {
       dispatch(setAuthUser(null));
       dispatch(setOtherUser(null));
       dispatch(setSelectedUser(null));
+      dispatch(setOnlineUsers(null));
       navigate("/auth/login");
     },
     onError: (error) => {

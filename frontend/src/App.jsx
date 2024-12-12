@@ -19,43 +19,58 @@ const AuthLayout = () => {
   );
 };
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Home />,
+    },
+    {
+      path: "/auth",
+      element: <AuthLayout />,
+      children: [
+        { path: "login", element: <Login /> },
+        { path: "register", element: <Register /> },
+      ],
+    },
+  ],
   {
-    path: "/",
-    element: <Home />,
+    future: {
+      v7_relativeSplatPath: true,
+      v7_fetcherPersist: true,
+      v7_normalizeFormMethod: true,
+      v7_partialHydration: true,
+      v7_skipActionErrorRevalidation: true,
+    },
   },
-  {
-    path: "/auth",
-    element: <AuthLayout />,
-    children: [
-      { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> },
-    ],
-  },
-]);
+);
 
 const App = () => {
-  const dispatch = useDispatch();
   const { authUser } = useSelector((state) => state.user);
-  const socket = useSelector((state) => state.socket);
+  const { socket } = useSelector((state) => state.socket);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(authUser);
     if (authUser?._id) {
-      const newSocket = io("http://localhost:8000", {
+      const newSocket = io("http://localhost:3000", {
         query: { userId: authUser._id },
       });
 
       dispatch(setSocket(newSocket));
 
       newSocket.on("getOnlineUsers", (onlineUsers) => {
+        console.log("getOnlineUsers", onlineUsers);
+
         dispatch(setOnlineUsers(onlineUsers));
       });
-      return () => {
-        if (newSocket) {
-          newSocket.disconnect(); // Use disconnect for Socket.IO cleanup
-        }
+
+      return () => newSocket.close();
+    } else {
+      if (socket) {
+        socket.close();
         dispatch(setSocket(null));
-      };
+      }
     }
   }, [authUser?._id, dispatch]);
 
@@ -69,7 +84,7 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <RouterProvider router={router} future={{ v7_startTransition: true }} />
       <Toaster />
     </QueryClientProvider>
   );
